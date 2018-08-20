@@ -25,7 +25,7 @@ def input_students
     hobby = retrieve_response
     puts "And which cohort do they belong to (just hit return if you dont know): "
     cohort = retrieve_response
-    cohort = :november if cohort == nil
+    cohort = :november if cohort == ""
     students << {name: name, cohort: cohort, hobby: hobby}
     puts "Now we have #{students.count} students"
     name = gets.chomp
