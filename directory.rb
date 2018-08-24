@@ -1,3 +1,4 @@
+require 'date'
 @students = [] # an empty array accessible to all methods
 
 def print_menu
@@ -37,7 +38,7 @@ def process(selection)
   when "4"
     filename = retrieve_filename
     if File.exists?(filename) == false
-      puts "file not found0"
+      puts "file not found"
       return
     end
     puts "Loading students..."
@@ -66,9 +67,13 @@ def input_students
     puts "What is #{name}'s hobby:"
     hobby = retrieve_response
     puts "And which cohort do they belong to (just hit return if you dont know): "
-    cohort = retrieve_response
+    cohort = retrieve_response.downcase.capitalize
+    cohort = "November" if cohort.empty?
+    while !Date::MONTHNAMES.include?(cohort)
+      puts "Thats not a month, please pick a month you annoying little.."
+      cohort = gets.chomp.downcase.capitalize
+    end
     cohort = cohort.to_sym
-    cohort = :november if cohort.empty?
     # add the student hash to the array
     add_hash_to_students({name: name, cohort: cohort, hobby: hobby})
     puts "Now we have #{@students.count} students"
@@ -132,7 +137,7 @@ end
 
 def load_students(filename = "students.csv")
   @students = []
-  file = File.open(filename, "r") 
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby = line.chomp.split(',')
     add_hash_to_students({name: name, cohort: cohort.to_sym, hobby: hobby})
