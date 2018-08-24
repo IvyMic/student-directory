@@ -131,7 +131,8 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+  @students = []
+  file = File.open(filename, "r") 
   file.readlines.each do |line|
     name, cohort, hobby = line.chomp.split(',')
     add_hash_to_students({name: name, cohort: cohort.to_sym, hobby: hobby})
